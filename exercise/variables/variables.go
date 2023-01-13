@@ -25,4 +25,19 @@ package main
 import "fmt"
 
 func main() {
+	var favColor string = "red"
+	fmt.Println(favColor)
+	birthYear, age := 1997, 25
+	fmt.Println(birthYear, age)
+
+	var (
+		firstName = "Balu"
+		lastName  = "Babu"
+	)
+	fmt.Println(firstName, lastName)
+
+	var ageInDays int
+	ageInDays = age * 365
+	fmt.Println(ageInDays)
+
 }
