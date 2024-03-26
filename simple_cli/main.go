@@ -12,21 +12,36 @@ func main() {
 	fmt.Scan(&choice)
 	switch choice {
 	case 1:
-		var radius int
-		fmt.Println("Enter radius of circle")
-		fmt.Scan(&radius)
-		fmt.Println(2 * math.Pi * float64(radius) * float64(radius))
+		radius := accept_input("Enter radius of circle")
+		fmt.Println(circle_area(radius))
 	case 2:
-		var len, bth int
-		fmt.Println("Enter length of rectangle")
-		fmt.Scan(&len)
-		fmt.Println("Enter breadth of rectangle")
-		fmt.Scan(&bth)
-		fmt.Println(len * bth)
+		len := accept_input("Enter length of rectangle")
+		bth := accept_input("Enter breadth of rectangle")
+		fmt.Println(rect_area(len, bth))
 	case 3:
-		var len int
-		fmt.Println("Enter length of square")
-		fmt.Scan(&len)
-		fmt.Println(len * len)
+		len := accept_input("Enter length og sqaure")
+		fmt.Println(square_area(len))
 	}
+}
+
+func accept_input(message string) int {
+	var temp int
+	fmt.Println(message)
+	fmt.Scan(&temp)
+	return temp
+}
+
+func circle_area(radius int) float64 {
+	area := 2 * math.Pi * float64(radius) * float64(radius)
+	return area
+}
+
+func rect_area(len, bth int) (area int) {
+	area = len * bth
+	return area
+}
+
+func square_area(len int) int {
+	area := len * len
+	return area
 }
