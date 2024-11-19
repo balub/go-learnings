@@ -5,6 +5,7 @@ import (
 	"math"
 )
 
+// We call this a Type Alias, where Dimension is techincally just a float32 underneath but calling it Dimension makes its purpose easier to understand
 type Dimension float32
 
 type Rectangle struct {
@@ -17,6 +18,8 @@ type Circle struct {
 
 // Interfaces in Go are similiar to interfaces in Java
 // They define the type of the functions that need to be implemented in any type that implements them
+// In go any type that shares the same name of the type alais defined in the interface natually becomes that interface i.e implicit definition
+// We do not explicitly define code to say Rectangle and Cirle are Shapes rather because they both have a method called Area and Perimenter they automatically become type of shape too
 type Shapes interface {
 	Area() Dimension
 	Perimeter() Dimension
