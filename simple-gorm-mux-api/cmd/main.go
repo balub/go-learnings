@@ -1,9 +1,13 @@
 package main
 
 import (
-	"fmt"
+	// "log"
+	"log"
+	"net/http"
+
 	"github.com/balub/go-learnings/simple-gorm-mux-api/internal/config"
 	"github.com/balub/go-learnings/simple-gorm-mux-api/internal/database"
+	"github.com/balub/go-learnings/simple-gorm-mux-api/internal/routes"
 	"github.com/gorilla/mux"
 )
 
@@ -13,13 +17,17 @@ func main() {
 
 	// initialize database
 	DBService := database.New()
+	DBService.Migrate()
 	defer DBService.Close()
-	fmt.Print(DBService)
 
 	// initialize mux router
 	r := mux.NewRouter()
+	s := r.PathPrefix("/v1/api").Subrouter()
+	routes.InitializeRoutes(DBService, s)
 
-	// initialize router handler function
+	err := http.ListenAndServe(":8080", s)
+	if err != nil {
+		log.Fatalln("There's an error with the server,", err)
+	}
 
-	http.Handle("/", r)
 }

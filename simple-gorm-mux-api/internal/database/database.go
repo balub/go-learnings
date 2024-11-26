@@ -2,9 +2,9 @@ package database
 
 import (
 	"log"
-	"os"
 
-	"gorm.io/driver/sqlite"
+	"github.com/balub/go-learnings/simple-gorm-mux-api/internal/models"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -13,7 +13,8 @@ type Database struct {
 }
 
 func New() *Database {
-	db, err := gorm.Open(sqlite.Open(os.Getenv("FILENAME")), &gorm.Config{})
+	dbURL := "postgres://postgres:mysecretpassword@localhost:5432"
+	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
@@ -24,7 +25,7 @@ func New() *Database {
 }
 
 func (db *Database) Migrate() {
-	db.DB.AutoMigrate()
+	db.DB.AutoMigrate(&models.Book{}, &models.Author{})
 }
 
 func (db *Database) Health() map[string]string {

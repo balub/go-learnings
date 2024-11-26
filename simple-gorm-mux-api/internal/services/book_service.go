@@ -1,12 +1,13 @@
 package services
 
 import (
+
 	"github.com/balub/go-learnings/simple-gorm-mux-api/internal/models"
 	"github.com/balub/go-learnings/simple-gorm-mux-api/internal/repositories"
 )
 
 type BookService interface {
-	CreateBook() models.Book
+	CreateBook(book *models.Book) error
 }
 
 type bookService struct {
@@ -19,6 +20,11 @@ func NewBookService(repo repositories.BookRepository) BookService {
 	}
 }
 
-func (b *bookService) CreateBook() models.Book {
-	return models.Book{Id: "12", Title: "Some random title", Genre: "sci-fi"}
+func (b *bookService) CreateBook(book *models.Book) error {
+	err := b.bookRepo.CreateBook(book)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

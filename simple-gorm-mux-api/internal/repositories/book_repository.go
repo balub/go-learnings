@@ -7,7 +7,7 @@ import (
 )
 
 type BookRepository interface {
-	CreateBook() models.Book
+	CreateBook(book *models.Book) error
 }
 
 type bookRepository struct {
@@ -20,6 +20,7 @@ func NewBookRepository(DB *database.Database) BookRepository {
 	}
 }
 
-func (b *bookRepository) CreateBook() models.Book {
-	return models.Book{Id: "12", Title: "Some random title", Genre: "sci-fi"}
+func (b *bookRepository) CreateBook(book *models.Book) error {
+	newBook := models.Book{Id: book.Id, Title: book.Title, Genre: book.Genre}
+	return b.db.Create(&newBook).Error
 }
